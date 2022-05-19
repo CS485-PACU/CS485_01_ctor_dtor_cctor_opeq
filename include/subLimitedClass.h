@@ -11,7 +11,7 @@
 
 #include <iostream>
 
-class subLimitedClass : public limitedClasss
+class subLimitedClass : public limitedClass
 {
 public:
 
