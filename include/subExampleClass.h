@@ -8,9 +8,11 @@
 //***************************************************************************
 #pragma once
 
+#include "exampleClass.h"
+
 #include <iostream>
 
-class subExampleClass
+class subExampleClass : public exampleClass
 {
 public:
 
@@ -18,15 +20,29 @@ public:
 
   subExampleClass (int x);
 
-  ~subExampleClass ();
+  virtual ~subExampleClass ();
 
   subExampleClass (const subExampleClass &rcData);
 
 
   subExampleClass& operator= (const subExampleClass &rcData);
 
-private:
-  int mData = 0;
+#ifndef WITHOUT_MOVE
+  // MOVE
+  subExampleClass (subExampleClass &&rcData);
+  subExampleClass& operator= (subExampleClass &&rcData);
+#endif
 
-  int *mpSubClassPtr;
+static int getNewCount();
+
+private:
+  int mSID;
+  int mData = 0;
+  int *mpSubClassPtr = nullptr;
+
+  static int getID();
+  static void countNew();
+  static int newCount;
+
+
 };

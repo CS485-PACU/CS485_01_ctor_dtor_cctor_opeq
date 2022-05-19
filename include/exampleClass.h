@@ -18,7 +18,7 @@ public:
 
   exampleClass (int x);
 
-  ~exampleClass ();
+  virtual ~exampleClass ();
 
   exampleClass (const exampleClass &rcData);
 

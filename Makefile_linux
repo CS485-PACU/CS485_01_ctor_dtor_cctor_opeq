@@ -7,19 +7,28 @@
 # Purpose:    
 #############################################################################
 
-all: bin bin/exampleClassMain bin/exampleClassWithoutMoveMain
+TARGETS=bin/exampleClassMain bin/exampleClassWithoutMoveMain bin/subExampleClassMain bin/subExampleClassWithoutMoveMain 
+all: bin ${TARGETS}
+
 
 compiler=g++
 
 bin:
 	mkdir -p bin
 
- bin/exampleClassMain: bin src/exampleClassMain.cpp src/exampleClass.cpp include/exampleClass.h
+bin/exampleClassMain: src/exampleClassMain.cpp src/exampleClass.cpp include/exampleClass.h
 	${compiler} -std=c++17 -o  $@ -g -Wall src/exampleClassMain.cpp src/exampleClass.cpp -Iinclude
 
-bin/exampleClassWithoutMoveMain: bin src/exampleClassMain.cpp src/exampleClass.cpp include/exampleClass.h
+bin/exampleClassWithoutMoveMain: src/exampleClassMain.cpp src/exampleClass.cpp include/exampleClass.h 
 	${compiler} -std=c++17 -o  $@ -g -Wall src/exampleClassMain.cpp src/exampleClass.cpp -Iinclude -DWITHOUT_MOVE
  
+bin/subExampleClassMain: src/subExampleClassMain.cpp src/exampleClass.cpp include/exampleClass.h src/subExampleClass.cpp include/subExampleClass.h
+	${compiler} -std=c++17 -o  $@ -g -Wall src/subExampleClassMain.cpp src/exampleClass.cpp  src/subExampleClass.cpp -Iinclude
+
+bin/subExampleClassWithoutMoveMain: src/subExampleClassMain.cpp src/exampleClass.cpp include/exampleClass.h src/subExampleClass.cpp include/subExampleClass.h
+	${compiler} -std=c++17 -o  $@ -g -Wall src/subExampleClassMain.cpp src/exampleClass.cpp src/subExampleClass.cpp  -Iinclude -DWITHOUT_MOVE
+
+
 valgrind: bin/main
 	valgrind -v --leak-check=yes --track-origins=yes --leak-check=full --show-leak-kinds=all bin/main
 
@@ -30,4 +39,4 @@ runMe: bin/main
 	bin/main
 	
 clean:
-	rm -rf bin/main bin/*.o bin/*.dSYM
+	rm -rf ${TARGETS} bin/*.o bin/*.dSYM

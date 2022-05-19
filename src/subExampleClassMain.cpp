@@ -1,5 +1,5 @@
 //***************************************************************************
-// File name:  exampleClassMain.cpp
+// File name:  subExampleClassMain.cpp
 // Author:     Chadd Williams
 // Date:       1/31/2017
 // Class:      CS485
@@ -7,7 +7,7 @@
 // Purpose:    Demonstrate how constructors and assignment operator are called
 //***************************************************************************
 
-#include "exampleClass.h"
+#include "subExampleClass.h"
 #include <iostream>
 
 
@@ -21,7 +21,7 @@
 //
 // Returned:    None
 //***************************************************************************
-void foo (exampleClass b4)
+void foo (subExampleClass b4)
 {
   std::cout << "inside foo" << std::endl;
 }
@@ -33,9 +33,9 @@ void foo (exampleClass b4)
 //
 // Parameters:  b5 - the object passed in by value
 //
-// Returned:    exampleClass - a copy of the parameter
+// Returned:    subExampleClass - a copy of the parameter
 //***************************************************************************
-exampleClass bar (exampleClass b5)
+subExampleClass bar (subExampleClass b5)
 {
   std::cout << "inside bar" << std::endl;
   return b5;
@@ -54,23 +54,23 @@ exampleClass bar (exampleClass b5)
 int main ()
 {
   std::cout << "b0\n";
-  exampleClass b0;
+  subExampleClass b0;
   std::cout << "end b0\n\n";
 
   std::cout << "b1\n";
-  exampleClass b1(1);
+  subExampleClass b1(1);
   std::cout << "end b1\n\n";
 
   std::cout << "b2\n";
-  exampleClass b2 (b1);
+  subExampleClass b2 (b1);
   std::cout << "end b2\n\n";
 
   std::cout << "b3\n";
-  exampleClass b3 = b1;
+  subExampleClass b3 = b1;
   std::cout << "end b3\n\n";
 
   std::cout << "b6\n";
-  exampleClass b6;
+  subExampleClass b6;
   std::cout << "end b6\n\n";
 
   std::cout << "foo\n";
@@ -82,13 +82,14 @@ int main ()
   std::cout << "end bar\n\n";
 
   std::cout << "b7\n";
-  exampleClass b7 = 1;
+  subExampleClass b7 = 1;
   std::cout << "end b7\n\n";
 
   std::cout << "b8\n";
   foo (1);
   std::cout << "end b8\n\n";
 
- std::cout << "\nexampleClass called new: " << exampleClass::getNewCount() << std::endl;
- return EXIT_SUCCESS;
+  std::cout << "\nexampleClass called new: " << exampleClass::getNewCount() << std::endl;
+  std::cout << "\nsubExampleClass called new: " << subExampleClass::getNewCount() << std::endl;
+  return EXIT_SUCCESS;
 }
