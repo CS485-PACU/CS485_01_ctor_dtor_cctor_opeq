@@ -6,8 +6,8 @@
         "executable": "cmd.exe",
         "args": [
           "/C",
-          // The path to VsDevCmd.bat depends on the version of Visual Studio you have installed.
-          "\"C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/Tools/VsDevCmd.bat\"",
+          // "\"C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/Tools/VsDevCmd.bat\"", // home
+          "\"C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/common7/Tools/VsDevCmd.bat\"", // VB at work
           "&&"
         ]
       }
