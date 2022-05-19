@@ -1,6 +1,6 @@
 # Sample makefile
 
-all: bin bin/exampleClassMain.exe bin/exampleClassWithoutMoveMain.exe
+all: bin bin/exampleClassMain.exe bin/exampleClassWithoutMoveMain.exe bin/subExampleClassMain.exe bin/subExampleClassWithoutMoveMain.exe
 
 bin:
 	mkdir bin
@@ -10,11 +10,17 @@ bin:
 #bin/main.exe:  bin src/*.cpp include/*.h
 #	cl.exe /Z7 /nologo  /Iinclude /EHsc /DEBUG /MTd src/*.cpp  /Fo:bin\ /Fe:bin\main.exe
 
-bin/exampleClassMain.exe:  bin src/exampleClass.cpp include/exampleClass.h src/exampleClassMain.cpp
+bin/exampleClassMain.exe:   src/exampleClass.cpp include/exampleClass.h src/exampleClassMain.cpp
 	cl.exe /Z7 /nologo  /Iinclude /EHsc /DEBUG /MTd src/exampleClass.cpp src/exampleClassMain.cpp  /Fo:bin\ /Fe:bin\exampleClassMain.exe
 
-bin/exampleClassWithoutMoveMain.exe:  bin src/exampleClass.cpp include/exampleClass.h src/exampleClassMain.cpp
+bin/exampleClassWithoutMoveMain.exe:   src/exampleClass.cpp include/exampleClass.h src/exampleClassMain.cpp
 	cl.exe /Z7 /nologo  /Iinclude /EHsc /DEBUG /MTd /D"WITHOUT_MOVE" src/exampleClass.cpp src/exampleClassMain.cpp  /Fo:bin\ /Fe:bin\exampleClassWithoutMoveMain.exe
+
+bin/subExampleClassMain.exe:   src/exampleClass.cpp include/exampleClass.h src/subExampleClassMain.cpp  src/subExampleClass.cpp include/subExampleClass.h 
+	cl.exe /Z7 /nologo  /Iinclude /EHsc /DEBUG /MTd src/exampleClass.cpp src/subExampleClassMain.cpp  src/subExampleClass.cpp /Fo:bin\ /Fe:bin\subExampleClassMain.exe 
+
+bin/subExampleClassWithoutMoveMain.exe:   src/exampleClass.cpp include/exampleClass.h src/subExampleClassMain.cpp src/subExampleClass.cpp include/subExampleClass.h 
+	cl.exe /Z7 /nologo  /Iinclude /EHsc /DEBUG /MTd /D"WITHOUT_MOVE" src/exampleClass.cpp src/subExampleClassMain.cpp src/subExampleClass.cpp /Fo:bin\ /Fe:bin\subExampleClassWithoutMoveMain.exe
 
 runMe: bin/main.exe
 	bin/main.exe
