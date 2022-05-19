@@ -26,14 +26,19 @@ public:
 
   exampleClass& operator= (const exampleClass &rcData);
 
-
+#ifndef WITHOUT_MOVE
   // MOVE
-  //exampleClass (const exampleClass &&rcData);
-  //exampleClass& operator= (const exampleClass &&rcData);
+  exampleClass (exampleClass &&rcData);
+  exampleClass& operator= (exampleClass &&rcData);
+#endif
+
+  static int getNewCount();
 
 private:
   int mID;
   int mData = 0;
   int *mpInt = nullptr;
   static int getID();
+  static void countNew();
+  static int newCount;
 };

@@ -23,6 +23,7 @@
 //***************************************************************************
 void foo (exampleClass b4)
 {
+  std::cout << "inside foo" << std::endl;
 }
 
 //***************************************************************************
@@ -36,6 +37,7 @@ void foo (exampleClass b4)
 //***************************************************************************
 exampleClass bar (exampleClass b5)
 {
+  std::cout << "inside bar" << std::endl;
   return b5;
 }
 
@@ -51,8 +53,12 @@ exampleClass bar (exampleClass b5)
 //***************************************************************************
 int main ()
 {
+  std::cout << "b0\n";
+  exampleClass b0;
+  std::cout << "end b0\n\n";
+
   std::cout << "b1\n";
-  exampleClass b1;
+  exampleClass b1(1);
   std::cout << "end b1\n\n";
 
   std::cout << "b2\n";
@@ -83,5 +89,6 @@ int main ()
   foo (1);
   std::cout << "end b8\n\n";
 
+  std::cout << "\ncalled new: " << exampleClass::getNewCount() << std::endl;
   return EXIT_SUCCESS;
 }

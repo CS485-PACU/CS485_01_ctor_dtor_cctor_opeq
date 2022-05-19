@@ -10,6 +10,7 @@ exampleClass::exampleClass(int x) : mData(x)
 {
   mID = exampleClass::getID();
   mpInt = new int;
+  exampleClass::countNew();
   *mpInt = x;
   std::cout << "exampleClass ctor(int) ID: " << mID << std::endl;
 }
@@ -24,17 +25,29 @@ exampleClass::~exampleClass()
 exampleClass::exampleClass(const exampleClass &rcData)
 {
 
+  // cctor COULD call op=
   // REQUIRES operator= to take a reference.
   // what happens if operator= is pass by value?
+  // this is not done here for clarity of
+  // which function gets called when
   mID = exampleClass::getID();
-  *this = rcData;
+  if ( this != &rcData ) 
+  {
+    mData = rcData.mData;
 
+    if ( nullptr != rcData.mpInt )
+    {
+      mpInt = new int;
+      exampleClass::countNew();
+      *mpInt = *rcData.mpInt;
+    }
+  }
   std::cout << "exampleClass ctor(const exampleClass&) ID: " << mID << std::endl;
 }
 
 exampleClass& exampleClass::operator=(const exampleClass &rcData)
 {
-  std::cout << "exampleClass op= ID: " << mID << std::endl;
+  std::cout << "exampleClass op=(const exampleClass&) ID: " << mID << std::endl;
 
   if ( this != &rcData ) 
   {
@@ -43,6 +56,7 @@ exampleClass& exampleClass::operator=(const exampleClass &rcData)
     if ( nullptr != rcData.mpInt )
     {
       mpInt = new int;
+      exampleClass::countNew();
       *mpInt = *rcData.mpInt;
     }
   }
@@ -55,3 +69,48 @@ int exampleClass::getID()
 
   return id ++;
 }
+
+int exampleClass::newCount = 0;
+
+void exampleClass::countNew()
+{
+  exampleClass::newCount++;
+}
+
+int exampleClass::getNewCount()
+{
+    return exampleClass::newCount;
+}
+
+
+#ifndef WITHOUT_MOVE
+exampleClass::exampleClass (exampleClass &&rcData)
+{
+  mID = exampleClass::getID();
+
+  // could call op=(&&)
+  // but for clarity we do not.
+  mData = rcData.mData;
+
+  // steal the pointer
+  mpInt = rcData.mpInt;
+  // vital to set the stolen pointer to nullptr
+  rcData.mpInt = nullptr;
+  std::cout << "exampleClass ctor(const exampleClass&&) ID: " << mID << std::endl;
+
+}
+
+exampleClass& exampleClass::operator= (exampleClass &&rcData)
+{
+  mData = rcData.mData;
+
+  // steal the pointer
+  mpInt = rcData.mpInt;
+  // vital to set the stolen pointer to nullptr
+  rcData.mpInt = nullptr;
+
+  std::cout << "exampleClass op=(const exampleClass&&) ID: " << mID << std::endl;
+
+  return *this;
+}
+#endif

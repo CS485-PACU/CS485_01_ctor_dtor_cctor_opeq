@@ -1,6 +1,6 @@
 # Sample makefile
 
-all: bin bin/exampleClassMain.exe
+all: bin bin/exampleClassMain.exe bin/exampleClassWithoutMoveMain.exe
 
 bin:
 	mkdir bin
@@ -12,6 +12,9 @@ bin:
 
 bin/exampleClassMain.exe:  bin src/exampleClass.cpp include/exampleClass.h src/exampleClassMain.cpp
 	cl.exe /Z7 /nologo  /Iinclude /EHsc /DEBUG /MTd src/exampleClass.cpp src/exampleClassMain.cpp  /Fo:bin\ /Fe:bin\exampleClassMain.exe
+
+bin/exampleClassWithoutMoveMain.exe:  bin src/exampleClass.cpp include/exampleClass.h src/exampleClassMain.cpp
+	cl.exe /Z7 /nologo  /Iinclude /EHsc /DEBUG /MTd /D"WITHOUT_MOVE" src/exampleClass.cpp src/exampleClassMain.cpp  /Fo:bin\ /Fe:bin\exampleClassWithoutMoveMain.exe
 
 runMe: bin/main.exe
 	bin/main.exe
