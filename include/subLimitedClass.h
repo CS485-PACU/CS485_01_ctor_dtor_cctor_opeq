@@ -7,10 +7,11 @@
 // Purpose:    Demonstrate how constructors and assignment operator are called
 //***************************************************************************
 #pragma once
+#include "limitedClass.h"
 
 #include <iostream>
 
-class subLimitedClass
+class subLimitedClass : public limitedClasss
 {
 public:
 
