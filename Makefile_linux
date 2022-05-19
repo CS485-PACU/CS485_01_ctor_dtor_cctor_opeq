@@ -7,18 +7,18 @@
 # Purpose:    
 #############################################################################
 
-all: bin bin/main
+all: bin bin/exampleClassMain bin/exampleClassWithoutMoveMain
 
 compiler=g++
 
 bin:
 	mkdir -p bin
 
-bin/main: bin src/*.cpp include/*.h
-	${compiler} -std=c++17 -o bin/main -g -Wall src/*.cpp -Iinclude
+ bin/exampleClassMain: bin src/exampleClassMain.cpp src/exampleClass.cpp include/exampleClass.h
+	${compiler} -std=c++17 -o  $@ -g -Wall $? -Iinclude
 
-#bin/main.o: bin src/helloWorld.cpp
-#	${compiler} -std=c++17 -c -o bin/main.o -g -Wall src/helloWorld.cpp 
+bin/exampleClassWithoutMoveMain: bin src/exampleClassMain.cpp src/exampleClass.cpp include/exampleClass.h
+	${compiler} -std=c++17 -o  $@ -g -Wall $? -Iinclude -DWITHOUT_MOVE
  
 valgrind: bin/main
 	valgrind -v --leak-check=yes --track-origins=yes --leak-check=full --show-leak-kinds=all bin/main
