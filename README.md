@@ -1,3 +1,10 @@
+## ctor, dtor, cctor, op= (copy assignment)
+## converting constructors
+## explicit
+## list initialization
+
+[Constructor](https://en.cppreference.com/w/cpp/language/constructor#See_also)
+
 ## C++ in VS Code on Mac, Windows, Linux
 
 ### Make sure your set the platform correctly on the bottom right of the VS Code window.
