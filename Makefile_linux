@@ -15,10 +15,10 @@ bin:
 	mkdir -p bin
 
  bin/exampleClassMain: bin src/exampleClassMain.cpp src/exampleClass.cpp include/exampleClass.h
-	${compiler} -std=c++17 -o  $@ -g -Wall $? -Iinclude
+	${compiler} -std=c++17 -o  $@ -g -Wall src/exampleClassMain.cpp src/exampleClass.cpp -Iinclude
 
 bin/exampleClassWithoutMoveMain: bin src/exampleClassMain.cpp src/exampleClass.cpp include/exampleClass.h
-	${compiler} -std=c++17 -o  $@ -g -Wall $? -Iinclude -DWITHOUT_MOVE
+	${compiler} -std=c++17 -o  $@ -g -Wall src/exampleClassMain.cpp src/exampleClass.cpp -Iinclude -DWITHOUT_MOVE
  
 valgrind: bin/main
 	valgrind -v --leak-check=yes --track-origins=yes --leak-check=full --show-leak-kinds=all bin/main
