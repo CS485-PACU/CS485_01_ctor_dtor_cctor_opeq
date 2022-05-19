@@ -87,7 +87,7 @@ int subExampleClass::getNewCount()
 
 #ifndef WITHOUT_MOVE
 subExampleClass::subExampleClass (subExampleClass &&rcData) : 
-  exampleClass(std::forward<exampleClass>(rcData)) // without std::forward() the cctor(exampleClass &) gets called!
+  exampleClass(std::move(rcData)) // without std::move() the cctor(exampleClass &) gets called!
 {
   mSID = subExampleClass::getID();
 
@@ -105,8 +105,8 @@ subExampleClass::subExampleClass (subExampleClass &&rcData) :
 
 subExampleClass& subExampleClass::operator= (subExampleClass &&rcData)
 {
-  // without std::forward() the op=(exampleClass &) gets called!
-  exampleClass::operator=(std::forward<exampleClass>(rcData));
+  // without std::move() the op=(exampleClass &) gets called!
+  exampleClass::operator=(std::move(rcData));
 
   mData = rcData.mData;
 
