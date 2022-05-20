@@ -1,5 +1,4 @@
 #include "exampleClass.h"
-#include <utility>
 
 exampleClass::exampleClass()
 {
@@ -108,9 +107,11 @@ exampleClass& exampleClass::operator= (exampleClass &&rcData)
   mData = rcData.mData;
 
   // steal the pointer
-  using std::swap;
-	swap(mpInt,rcData.mpInt);
+  delete mpInt;
+  mpInt = rcData.mpInt;
 
+  // vital to set this parameter pointer to nullptr!
+  rcData.mpInt = nullptr;
   std::cout << "exampleClass op=(const exampleClass&&) ID: " << mID << std::endl;
 
   return *this;

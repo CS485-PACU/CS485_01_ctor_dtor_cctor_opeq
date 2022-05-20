@@ -1,5 +1,4 @@
 #include "subExampleClass.h"
-#include <utility>
 
 subExampleClass::subExampleClass() : exampleClass()
 {
@@ -115,8 +114,11 @@ subExampleClass& subExampleClass::operator= (subExampleClass &&rcData)
   mData = rcData.mData;
 
   // steal the pointer
-  using std::swap;
-	swap(mpSubClassPtr,rcData.mpSubClassPtr);
+  delete mpSubClassPtr;
+	mpSubClassPtr = rcData.mpSubClassPtr;
+
+  // vital to set this parameter ptr to nullptr
+  rcData.mpSubClassPtr = nullptr;
 
   std::cout << "subExampleClass op=(const subExampleClass&&) ID: " << mSID << std::endl;
 
