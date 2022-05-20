@@ -7,7 +7,10 @@
 # Purpose:    
 #############################################################################
 
-TARGETS=bin/exampleClassMain bin/exampleClassWithoutMoveMain bin/subExampleClassMain bin/subExampleClassWithoutMoveMain 
+TARGETS=bin/exampleClassMain bin/exampleClassWithoutMoveMain \
+bin/subExampleClassMain bin/subExampleClassWithoutMoveMain \
+bin/limitedClassMain
+
 all: bin ${TARGETS}
 
 
@@ -27,6 +30,9 @@ bin/subExampleClassMain: src/subExampleClassMain.cpp src/exampleClass.cpp includ
 
 bin/subExampleClassWithoutMoveMain: src/subExampleClassMain.cpp src/exampleClass.cpp include/exampleClass.h src/subExampleClass.cpp include/subExampleClass.h
 	${compiler} -std=c++17 -o  $@ -g -Wall src/subExampleClassMain.cpp src/exampleClass.cpp src/subExampleClass.cpp  -Iinclude -DWITHOUT_MOVE
+
+bin/limitedClassMain: src/limitedClassMain.cpp src/limitedClass.cpp include/limitedClass.h
+	${compiler} -std=c++17 -o  $@ -g -Wall src/limitedClassMain.cpp src/limitedClass.cpp -Iinclude
 
 
 valgrind: bin/main
