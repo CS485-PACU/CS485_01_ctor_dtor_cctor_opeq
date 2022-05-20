@@ -1,4 +1,5 @@
 #include "exampleClass.h"
+#include <utility>
 
 exampleClass::exampleClass()
 {
@@ -52,6 +53,8 @@ exampleClass& exampleClass::operator=(const exampleClass &rcData)
   if ( this != &rcData ) 
   {
     mData = rcData.mData;
+    delete mpInt;
+    mpInt = nullptr;
 
     if ( nullptr != rcData.mpInt )
     {
@@ -105,9 +108,8 @@ exampleClass& exampleClass::operator= (exampleClass &&rcData)
   mData = rcData.mData;
 
   // steal the pointer
-  mpInt = rcData.mpInt;
-  // vital to set the stolen pointer to nullptr
-  rcData.mpInt = nullptr;
+  using std::swap;
+	swap(mpInt,rcData.mpInt);
 
   std::cout << "exampleClass op=(const exampleClass&&) ID: " << mID << std::endl;
 

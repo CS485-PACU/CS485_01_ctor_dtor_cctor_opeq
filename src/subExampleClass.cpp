@@ -1,4 +1,5 @@
 #include "subExampleClass.h"
+#include <utility>
 
 subExampleClass::subExampleClass() : exampleClass()
 {
@@ -34,7 +35,6 @@ subExampleClass::subExampleClass(const subExampleClass &rcData) : exampleClass(r
   if ( this != &rcData ) 
   {
     mData = rcData.mData;
-
     if ( nullptr != rcData.mpSubClassPtr )
     {
       mpSubClassPtr = new int;
@@ -54,6 +54,8 @@ subExampleClass& subExampleClass::operator=(const subExampleClass &rcData)
   if ( this != &rcData ) 
   {
     mData = rcData.mData;
+    delete mpSubClassPtr;
+    mpSubClassPtr = nullptr;
 
     if ( nullptr != rcData.mpSubClassPtr )
     {
@@ -103,6 +105,8 @@ subExampleClass::subExampleClass (subExampleClass &&rcData) :
 
 }
 
+#include <utility>
+
 subExampleClass& subExampleClass::operator= (subExampleClass &&rcData)
 {
   // without std::move() the op=(exampleClass &) gets called!
@@ -111,9 +115,8 @@ subExampleClass& subExampleClass::operator= (subExampleClass &&rcData)
   mData = rcData.mData;
 
   // steal the pointer
-  mpSubClassPtr = rcData.mpSubClassPtr;
-  // vital to set the stolen pointer to nullptr
-  rcData.mpSubClassPtr = nullptr;
+  using std::swap;
+	swap(mpSubClassPtr,rcData.mpSubClassPtr);
 
   std::cout << "subExampleClass op=(const subExampleClass&&) ID: " << mSID << std::endl;
 
