@@ -89,6 +89,10 @@ int main ()
   foo (1);
   std::cout << "end b8\n\n";
 
+  std::cout << "b9\n";
+  exampleClass b8 = { 1 }; 
+  std::cout << "end b9\n\n";
+
  std::cout << "\nexampleClass called new: " << exampleClass::getNewCount() << std::endl;
  return EXIT_SUCCESS;
 }
