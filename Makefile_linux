@@ -9,7 +9,7 @@
 
 TARGETS=bin/exampleClassMain bin/exampleClassWithoutMoveMain \
 bin/subExampleClassMain bin/subExampleClassWithoutMoveMain \
-bin/limitedClassMain
+bin/limitedClassMain bin/exampleClassCopyAndSwapMain
 
 all: bin ${TARGETS}
 
@@ -34,6 +34,8 @@ bin/subExampleClassWithoutMoveMain: src/subExampleClassMain.cpp src/exampleClass
 bin/limitedClassMain: src/limitedClassMain.cpp src/limitedClass.cpp include/limitedClass.h
 	${compiler} -std=c++17 -o  $@ -g -Wall src/limitedClassMain.cpp src/limitedClass.cpp -Iinclude
 
+bin/exampleClassCopyAndSwapMain: src/exampleClassCopyAndSwapMain.cpp src/exampleClassCopyAndSwap.cpp include/exampleClassCopyAndSwap.h
+	${compiler} -std=c++17 -o  $@ -g -Wall src/exampleClassCopyAndSwapMain.cpp src/exampleClassCopyAndSwap.cpp -Iinclude
 
 valgrind: bin/main
 	valgrind -v --leak-check=yes --track-origins=yes --leak-check=full --show-leak-kinds=all bin/main

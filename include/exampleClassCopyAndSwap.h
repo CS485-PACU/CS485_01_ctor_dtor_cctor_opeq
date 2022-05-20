@@ -26,13 +26,9 @@ public:
 
   exampleClassCopyAndSwap& operator= (exampleClassCopyAndSwap rcData); // NOTE NO REFERENCE OR CONST
 
+  friend std::ostream& operator<<(std::ostream& , const exampleClassCopyAndSwap&);
+
 private:
   int mData = 0;
-  int *mpInt;
+  int *mpInt = nullptr;
 };
-/*
-  // op=    #include <utility>
-	using std::swap;
-	swap(mpInt, cData.mpInt);
-	return *this;
-  */
